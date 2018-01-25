@@ -1,12 +1,20 @@
 #pragma once
 
 #include <stddef.h>
+#ifdef ARDUINO_ARCH_AVR
 #include <util/atomic.h>
+#define _ATOMIC_BLOCK_() ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+#endif //ARDUINO_ARCH_AVR
+
+#ifdef ARDUINO_ARCH_STM32
+#include "atomic_stm32.h"
+#define _ATOMIC_BLOCK_() ATOMIC_BLOCK()
+#endif //ARDUINO_ARCH_STM32
 
 template <typename BufferType, const size_t BufferSize> class FifoBuffer_New
 {
 public:
-	FifoBuffer() __attribute__((always_inline))
+	FifoBuffer_New() __attribute__((always_inline))
 	{
 		head = tail = buffer;
 	}
@@ -29,14 +37,6 @@ public:
 			tail = buffer;
 		else
 			tail++;
-/*
-		DEBUG_PRINT("\npush - head: ");
-		DEBUG_PRINT_BASE((uint16_t)head, HEX);
-		DEBUG_PRINT(", tail: ");
-		DEBUG_PRINT_BASE((uint16_t)tail, HEX);
-		DEBUG_PRINT(", buffer: ");
-		DEBUG_PRINTLN_BASE((uint16_t)buffer, HEX);
-		*/
 	}
 
 	inline BufferType pop() __attribute__((always_inline))
@@ -50,14 +50,6 @@ public:
 		}
 		else
 			retVal = *(head++);
-/*
-		DEBUG_PRINT("\npop - head: ");
-		DEBUG_PRINT_BASE((uint16_t)head, HEX);
-		DEBUG_PRINT(", tail: ");
-		DEBUG_PRINT_BASE((uint16_t)tail, HEX);
-		DEBUG_PRINT(", buffer: ");
-		DEBUG_PRINTLN_BASE((uint16_t)buffer, HEX);
-*/
 		return retVal;
 	}
 
@@ -69,7 +61,9 @@ public:
 	inline bool isempty_locked() __attribute__((always_inline))
 	{
 		bool result;
-		ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+		noInterrupts();
+		interrupts();
+		_ATOMIC_BLOCK_()
 		{
 			result = isempty();
 		}
@@ -79,7 +73,7 @@ public:
 	inline bool isfull_locked() __attribute__((always_inline))
 	{
 		bool result;
-		ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+		_ATOMIC_BLOCK_()
 		{
 			result = isfull();
 		}
@@ -88,7 +82,7 @@ public:
 
 	inline void push_locked(BufferType val) __attribute__((always_inline))
 	{
-		ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+		_ATOMIC_BLOCK_()
 		{
 			push(val);
 		}
@@ -97,7 +91,7 @@ public:
 	inline BufferType pop_locked() __attribute__((always_inline))
 	{
 		BufferType c;
-		ATOMIC_BLOCK(ATOMIC_RESTORESTATE)
+		_ATOMIC_BLOCK_()
 		{
 			c = pop();
 		}

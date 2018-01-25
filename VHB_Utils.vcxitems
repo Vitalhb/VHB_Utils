@@ -25,6 +25,7 @@
     <ClCompile Include="$(MSBuildThisFileDirectory)src\VHB_Utils.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\atomic_stm32.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\Bits.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\CRC-CCIT_New.h" />
     <ClInclude Include="$(MSBuildThisFileDirectory)src\FifoBuffer_New.h" />

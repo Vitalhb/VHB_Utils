@@ -56,5 +56,8 @@
     <ClInclude Include="$(MSBuildThisFileDirectory)src\VHB_Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="$(MSBuildThisFileDirectory)src\atomic_stm32.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

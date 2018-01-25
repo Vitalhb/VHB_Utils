@@ -2,6 +2,11 @@
 #define SERIAL_DEBUG
 #include <VHB_Debug_Utils.h>
 #include <VHB_Utils.h>
+#include <Bits.h>
+#include <CRC-CCIT_New.h>
+#include <FifoBuffer_New.h>
+#include <SineSamples.h>
+
 
 Led led;
 NonBlockTimer_OS timer;

@@ -3,7 +3,7 @@
 #include <VHB_Debug_Utils.h>
 #include "VHB_Utils.h"
 
-void Led::begin(byte lport, bool bPolarity)
+void Led::begin(uint8_t lport, bool bPolarity)
 {
 	if (lport != 0)
 	{
@@ -101,7 +101,7 @@ void Led::DoubleBlink(uint16_t time1_On, uint16_t time1_Off, uint16_t time2_On, 
 	}
 }
 
-void Buzzer::begin(byte lport, unsigned int lfrequency, bool bEnabled = true)
+void Buzzer::begin(uint8_t lport, unsigned int lfrequency, bool bEnabled)
 {
 	port = lport;
 	frequency = lfrequency;
@@ -120,7 +120,7 @@ void Buzzer::On(int duration)
 	}
 }
 
-void Buzzer::Beep(byte nTimes /* = 1 */, int Duration /* = 200 */, int Interval /* = 200 */)
+void Buzzer::Beep(uint8_t nTimes, int Duration, int Interval)
 {
 	if (bEnable)
 	{
@@ -136,7 +136,7 @@ void Buzzer::Beep(byte nTimes /* = 1 */, int Duration /* = 200 */, int Interval 
 	}
 }
 
-void Buzzer::BeepNonBlock(int Duration /* = 200 */, int Interval /* = 200 */)
+void Buzzer::BeepNonBlock(int Duration, int Interval)
 {
 	if (bEnable)
 	{
@@ -171,9 +171,6 @@ char *StringUtils::CopyAndPad(char *dstStr, uint8_t dstSize, const char *srcStr,
 {
 	uint8_t i = 0;
 	char tmpChar;
-
-//	if (srcStr == nullptr)
-//		srcStr = "";
 
 	while (*srcStr && i < dstSize)
 	{
@@ -216,7 +213,7 @@ bool StringUtils::CheckChars(char *str, int8_t size, bool(*func)(int c))
 	return result;
 }
 
-void StringUtils::UnsignedToStr(uint16_t number, char *str, int8_t digits = 0)
+void StringUtils::UnsignedToStr(uint16_t number, char *str, int8_t digits)
 {
 	int8_t index = 0, size;
 	char strTmp[5];

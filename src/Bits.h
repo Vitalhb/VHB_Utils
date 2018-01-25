@@ -1,5 +1,7 @@
 #pragma once
 
+#include <avr/pgmspace.h>
+
 // macros to generate the PARITY_8_BIT lookup table (at compile-time)
 #define P2(n) n, n ^ 1, n ^ 1, n
 #define P4(n) P2(n), P2(n ^ 1), P2(n ^ 1), P2(n)
@@ -24,13 +26,13 @@
 //const uint8_t BitsSetTable_7Bits[] PROGMEM = { COUNT_BITS_7BITS_TABLE };
 //const uint8_t BitsSetTable_8Bits[] PROGMEM = { COUNT_BITS_8BITS_TABLE };
 
+inline uint8_t count_bits(uint8_t value, const uint8_t NumberOfBits, const uint8_t BitsSetTable[]) __attribute__((always_inline));
 inline uint8_t parity(uint8_t value, const uint8_t BitsSetTable[]) __attribute__((always_inline));
 
 inline uint8_t count_bits_progmem(uint8_t value, const uint8_t NumberOfBits, const uint8_t BitsSetTable[]) __attribute__((always_inline));
+inline uint8_t parity_progmem(uint8_t value, const uint8_t BitsSetTable[]) __attribute__((always_inline));
 
-inline uint8_t         count_bits(uint8_t value, const uint8_t NumberOfBits, const uint8_t BitsSetTable[]) __attribute__((always_inline));
-
-uint8_t parity(uint8_t value, const uint8_t parityTable[])
+uint8_t parity_progmem(uint8_t value, const uint8_t parityTable[])
 {
 	return pgm_read_byte_near(parityTable + value);
 }
@@ -38,6 +40,11 @@ uint8_t parity(uint8_t value, const uint8_t parityTable[])
 uint8_t count_bits_progmem(uint8_t value, const uint8_t NumberOfBits, const uint8_t BitsSetTable[])
 {
 	return pgm_read_byte_near(BitsSetTable + (value & (_BV(NumberOfBits) - 1)));
+}
+
+uint8_t parity(uint8_t value, const uint8_t parityTable[])
+{
+	return parityTable[value];
 }
 
 uint8_t count_bits(uint8_t value, const uint8_t NumberOfBits, const uint8_t BitsSetTable[])

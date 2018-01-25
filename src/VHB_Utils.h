@@ -2,16 +2,18 @@
 #define VHB_UTILS
 
 #define	ALWAYS_INLINE __attribute__((always_inline))
-#define	BYTE_TO_CHAR(i)	('0' + (i))
-#define	CHAR_TO_BYTE(c)	((c) - '0')
+#define	BYTE_TO_CHAR(i)	('0' + (uint8_t)(i))
+#define	CHAR_TO_BYTE(c)	((uint8_t)(c) - '0')
 
 #define STRINGIFY(x) #x
 #define TOKEN_TO_STRING(x) STRINGIFY(x)
 
+#ifdef ARDUINO_ARCH_AVR
 inline void* operator new(size_t size, void* ptr)
 {
 	return ptr;
 }
+#endif //ARDUINO_ARCH_AVR
 
 // Non blocking timer. Slightly faster than the NonBlockTimer_OS 
 // Not safe for millis() overflows. Works for devices that do not operate more than 49 days without restart.
