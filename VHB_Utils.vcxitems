@@ -13,27 +13,4 @@
   <ItemGroup>
     <ProjectCapability Include="SourceItemsFromImports" />
   </ItemGroup>
-  <ItemGroup>
-    <Text Include="$(MSBuildThisFileDirectory)readme.txt" />
-    <Text Include="$(MSBuildThisFileDirectory)library.properties" />
-  </ItemGroup>
-  <ItemGroup>
-    <!-- <ClInclude Include="$(MSBuildThisFileDirectory)VHB_Utils.h" /> -->
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\CRC-CCIT_New.c" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\NilSerial_.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\SineSamples.cpp" />
-    <ClCompile Include="$(MSBuildThisFileDirectory)src\VHB_Utils.cpp" />
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\atomic_stm32.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\Bits.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\CRC-CCIT_New.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\FifoBuffer_New.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\NilSerial_.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\Port_IO.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\SineSamples.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\TableGenerator.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\VHB_Debug_Utils.h" />
-    <ClInclude Include="$(MSBuildThisFileDirectory)src\VHB_Utils.h" />
-  </ItemGroup>
 </Project>
