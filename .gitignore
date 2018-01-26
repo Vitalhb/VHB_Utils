@@ -243,3 +243,4 @@ ModelManifest.xml
 
 # ignore Visual Micro files
 __vm/
+examples/LedTest/__vm/
