@@ -190,10 +190,10 @@ char *StringUtils::CopyAndPad(char *dstStr, uint8_t dstSize, const char *srcStr,
 	return dstStr;
 }
 
-bool StringUtils::CheckChars(char *str, int8_t size, char min, char max)
+bool StringUtils::CheckChars(char *str, uint8_t size, char min, char max)
 {
 	bool result = true;
-	while (size-- && result)
+	while (*str && size-- && result)
 	{
 		result &= *str >= min;
 		result &= *str <= max;
@@ -202,10 +202,10 @@ bool StringUtils::CheckChars(char *str, int8_t size, char min, char max)
 	return result;
 }
 
-bool StringUtils::CheckChars(char *str, int8_t size, bool(*func)(int c))
+bool StringUtils::CheckChars(char *str, uint8_t size, bool(*func)(int c))
 {
 	bool result = true;
-	while (size-- && result)
+	while (*str && size-- && result)
 	{
 		result &= func(*str);
 		str++;
@@ -213,7 +213,7 @@ bool StringUtils::CheckChars(char *str, int8_t size, bool(*func)(int c))
 	return result;
 }
 
-void StringUtils::UnsignedToStr(uint16_t number, char *str, int8_t digits)
+void StringUtils::UnsignedToStr(uint16_t number, char *str, uint8_t digits)
 {
 	int8_t index = 0, size;
 	char strTmp[5];
@@ -243,7 +243,39 @@ void StringUtils::UnsignedToStr(uint16_t number, char *str, int8_t digits)
 	str[size] = 0;
 }
 
-void StringUtils::printCharArray(const char *str, int8_t len, bool bEol)
+const char *UnsignedToStr(uint16_t number, uint8_t digits = 0)
+{
+	static char strTmp[6];
+	int8_t index = sizeof(strTmp) - 1;
+
+	if (digits > sizeof(strTmp) - 1)
+		digits = sizeof(strTmp) - 1;
+
+	strTmp[index] = 0;
+	
+	do
+	{
+		if (index > 0)
+			index--;
+		if (digits > 0)
+			digits--;
+		strTmp[index] = BYTE_TO_CHAR(number % 10);
+		number /= 10;
+	}
+	while (number != 0);
+
+	while (digits > 0)
+	{
+		if (index > 0)
+			index--;
+		digits--;
+		strTmp[index] = '0';
+	}
+
+	return &strTmp[index];
+}
+
+void StringUtils::printCharArray(const char *str, uint8_t len, bool bEol)
 {
 	for (int8_t i = 0; i < len; i++)
 	{

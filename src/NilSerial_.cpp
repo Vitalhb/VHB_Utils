@@ -26,6 +26,21 @@
  * @{
  */
 #include <Arduino.h>
+
+#ifdef __AVR_ATmega32__
+#define UDR0 UDR
+#define UCSR0A UCSRA
+#define RXC0 RXC
+#define U2X0 U2X
+#define UBRR0H UBRRH
+#define UBRR0L UBRRL
+#define UCSR0B UCSRB
+#define TXEN0 TXEN
+#define RXEN0 RXEN
+#define UDRIE0 UDRIE
+#define UDRE0 UDRE
+#endif //__AVR_ATmega32__
+
 #if defined(UDR0) || defined(__DOXYGEN__)
 #include "NilSerial_.h"
 //------------------------------------------------------------------------------

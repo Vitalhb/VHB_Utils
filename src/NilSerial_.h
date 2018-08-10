@@ -40,9 +40,9 @@ class NilSerialClass : public Print {
   size_t write(uint8_t b);
   using Print::write;
 };
-#ifdef UDR0
+#if defined(UDR0) || defined(UDR)
 extern NilSerialClass NilSerial;
-#endif  // UDR0
+#endif  // UDR0 || UDR
 #endif  // NilSerial_h
 
 /** @} */

@@ -9,7 +9,7 @@
 #define TOKEN_TO_STRING(x) STRINGIFY(x)
 
 #ifdef ARDUINO_ARCH_AVR
-inline void* operator new(size_t size, void* ptr)
+inline void* operator new(size_t size __attribute__((unused)), void* ptr)
 {
 	return ptr;
 }
@@ -23,6 +23,13 @@ class NonBlockDelay
 	bool bRunning = false;
 
 public:
+	NonBlockDelay() { }
+
+	NonBlockDelay(bool bStartRunning)
+	{
+		begin(bStartRunning);
+	}
+
 	inline void begin(bool bStartRunning = true) ALWAYS_INLINE
 	{
 		iTimeout = millis();
@@ -292,11 +299,12 @@ class StringUtils
 {
 public:
 	static char *CopyAndPad(char *dstStr, uint8_t dstSize, const char *srcStr, bool toUpper = false, char padChar = ' ');
-	static bool CheckChars(char *str, int8_t size, char min, char max);
-	static bool CheckChars(char *str, int8_t size, bool (*func)(int c));
+	static bool CheckChars(char *str, uint8_t size, char min, char max);
+	static bool CheckChars(char *str, uint8_t size, bool (*func)(int c));
 	static inline bool isalnumspace(int ch) { return (isAlphaNumeric(ch) || isblank(ch)); }
-	static void UnsignedToStr(uint16_t number, char *str, int8_t digits = 0);
-	static void printCharArray(const char *str, int8_t len, bool bEol);
+	static void UnsignedToStr(uint16_t number, char *str, uint8_t digits = 0);
+	static const char *UnsignedToStr(uint16_t number, uint8_t digits = 0);
+	static void printCharArray(const char *str, uint8_t len, bool bEol);
 
 	template <typename T>
 	static char *sprint(T number, uint8_t base = 10, uint8_t digits = 0)
