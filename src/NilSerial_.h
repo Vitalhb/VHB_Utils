@@ -35,6 +35,7 @@
 class NilSerialClass : public Print {
  public:
   int available();
+  void end() __attribute__((always_inline)) {}
   void begin(unsigned long);
   int read();
   size_t write(uint8_t b);

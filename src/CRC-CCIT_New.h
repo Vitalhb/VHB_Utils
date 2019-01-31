@@ -9,15 +9,15 @@
 #define CRC_CCITT_CORRECT  0xF0B8
 
 extern const uint16_t crc_ccit_table_new[256] PROGMEM;
-inline uint16_t update_crc_ccit_new(uint8_t c, uint16_t prev_crc) __attribute__((always_inline));
-inline bool verify_crc_ccitt_new(uint16_t crc) __attribute__((always_inline));
+//static inline uint16_t update_crc_ccit_new(uint8_t c, uint16_t prev_crc) __attribute__((always_inline));
+//static inline bool verify_crc_ccitt_new(uint16_t crc) __attribute__((always_inline));
 
-inline uint16_t update_crc_ccit_new(uint8_t c, uint16_t prev_crc)
+static inline uint16_t update_crc_ccit_new(uint8_t c, uint16_t prev_crc)
 {
     return (prev_crc >> 8) ^ pgm_read_word(&crc_ccit_table_new[(prev_crc ^ c) & 0xff]);
 }
 
-inline bool verify_crc_ccitt_new(uint16_t crc)
+static inline bool verify_crc_ccitt_new(uint16_t crc)
 {
 	return crc == CRC_CCITT_CORRECT;
 }

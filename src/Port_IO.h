@@ -1,3 +1,11 @@
+/*
+* Port_IO library/template.
+*
+* TPort_IO is smaler and faster than Port_IO.
+* TPort_IO is as fast as direct port manipulation.
+*
+* Vital H.B 2019
+*/
 #pragma once
 
 #define BIT0 0x01
@@ -89,6 +97,7 @@ public:
 	volatile uint8_t * _Pin;
 };
 
+// Declaration: TPORT_IO<(uint16_t)&PORTx> variable; PORTx can be PORTA, PORTB, etc
 template <uint16_t PortBaseAddress> class TPort_IO
 {
 public:

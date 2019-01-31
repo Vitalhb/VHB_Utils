@@ -8,8 +8,13 @@
 
 #if defined(SERIAL_DEBUG) || defined (DEBUG_SERIAL)
 
-#define DEBUG_LOGLN(str) do {  Serial.print(__PRETTY_FUNCTION__); Serial.print(' '); Serial.println(str); } while(0)
-#define DEBUG_LOG(str) do {  Serial.print(__PRETTY_FUNCTION__); Serial.print(' '); Serial.print(str); } while(0)
+#define DEBUG_PRINTF(x, ...)	Serial.printf(x, __VA_ARGS__)
+
+#define DEBUG_LOGF(str, ...) do {  Serial.print(__PRETTY_FUNCTION__); Serial.printf(" " str, __VA_ARGS__); } while(0)
+#define DEBUG_LOGFLN(str, ...) do {  Serial.print(__PRETTY_FUNCTION__); Serial.printf(" " str "\n", __VA_ARGS__); } while(0)
+#define DEBUG_LOG(str) do {  Serial.print(__PRETTY_FUNCTION__); Serial.print(" " str); } while(0)
+//#define DEBUG_LOGLN(str) do {  Serial.print(__PRETTY_FUNCTION__); Serial.println(" " str); } while(0)
+#define DEBUG_LOGLN(str) DEBUG_LOG(str "\r\n")
 
 #define DEBUG_LOGLN_LITERAL(str)    DEBUG_LOGLN(F(str))
 #define DEBUG_LOG_LITERAL(str)		DEBUG_LOG(F(str))
@@ -42,6 +47,9 @@
 #define DEBUG_DUMP_VAR(Xclass)	DEBUG_PRINT_LITERAL(#Xclass ": "); Xclass.dump()
 
 #else
+#define DEBUG_PRINTF(x, ...)
+#define DEBUG_LOGF(str, ...)
+#define DEBUG_LOGFLN(str, ...)
 #define DEBUG_LOGLN_LITERAL(str)
 #define DEBUG_LOG_LITERAL(str)
 #define DEBUG_LOG(str)
